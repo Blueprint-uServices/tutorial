@@ -1,0 +1,8 @@
+go 1.20
+
+use (
+    ./examples/helloworld/wiring
+    ./examples/helloworld/workflow
+    ./examples/helloworld/tests
+    ./plugins
+)
