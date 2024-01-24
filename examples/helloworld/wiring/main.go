@@ -18,7 +18,7 @@ import (
 
 func main() {
 	// Configure the location of our workflow spec
-	workflowspec.AddModule("github.com/blueprint-uservices/tutorial.examples/helloworld/workflow")
+	workflowspec.AddModule("github.com/blueprint-uservices/tutorial/examples/helloworld/workflow")
 
 	// Build a supported wiring spec
 	name := "HelloWorld"
