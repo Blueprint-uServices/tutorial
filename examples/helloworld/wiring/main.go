@@ -12,13 +12,13 @@ package main
 
 import (
 	"github.com/blueprint-uservices/blueprint/plugins/cmdbuilder"
-	"github.com/blueprint-uservices/blueprint/plugins/workflow"
+	"github.com/blueprint-uservices/blueprint/plugins/workflow/workflowspec"
 	"github.com/blueprint-uservices/tutorial/examples/helloworld/wiring/specs"
 )
 
 func main() {
 	// Configure the location of our workflow spec
-	workflow.Init("../workflow")
+	workflowspec.AddModule("github.com/blueprint-uservices/tutorial.examples/helloworld/workflow")
 
 	// Build a supported wiring spec
 	name := "HelloWorld"

@@ -10,6 +10,8 @@ import (
 	"github.com/blueprint-uservices/blueprint/plugins/linuxcontainer"
 	"github.com/blueprint-uservices/blueprint/plugins/simple"
 	"github.com/blueprint-uservices/blueprint/plugins/workflow"
+	"github.com/blueprint-uservices/tutorial/examples/helloworld/workflow/servicea"
+	"github.com/blueprint-uservices/tutorial/examples/helloworld/workflow/serviceb"
 )
 
 var Docker = cmdbuilder.SpecOption{
@@ -28,8 +30,8 @@ func makeDockerSpec(spec wiring.WiringSpec) ([]string, error) {
 		goproc.CreateProcess(spec, procName, service_name)
 		return linuxcontainer.CreateContainer(spec, cntrName, procName)
 	}
-	serviceb := workflow.Service(spec, "serviceB", "ServiceBImpl", cache)
-	servicea := workflow.Service(spec, "serviceA", "ServiceAImpl", serviceb)
+	serviceb := workflow.Service[*serviceb.ServiceBImpl](spec, "b_service", cache)
+	servicea := workflow.Service[*servicea.ServiceAImpl](spec, "a_service", serviceb)
 	cntrb := applyLoggerDefaults(serviceb)
 	cntra := applyLoggerDefaults(servicea)
 	return []string{cntra, cntrb}, nil
