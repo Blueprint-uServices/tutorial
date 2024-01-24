@@ -2,13 +2,15 @@ module github.com/blueprint-uservices/tutorial/examples/helloworld/wiring
 
 go 1.20
 
+require github.com/blueprint-uservices/tutorial/examples/helloworld/workflow v0.0.0
+
 require (
-	github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240118214956-4c7cf2978ee5
-	github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240124141657-27c0e50f04d2
+	github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240120085724-a66c24cd32b1
+	github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240124150923-2a923229672a
 )
 
 require (
-	github.com/blueprint-uservices/blueprint/runtime v0.0.0-20240118214956-4c7cf2978ee5 // indirect
+	github.com/blueprint-uservices/blueprint/runtime v0.0.0-20240120085724-a66c24cd32b1 // indirect
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/jmoiron/sqlx v1.3.5 // indirect
@@ -27,3 +29,5 @@ require (
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/tools v0.15.0 // indirect
 )
+
+replace github.com/blueprint-uservices/tutorial/examples/helloworld/workflow => ../workflow
