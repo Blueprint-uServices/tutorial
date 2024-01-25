@@ -5,8 +5,8 @@ go 1.20
 require github.com/blueprint-uservices/tutorial/examples/helloworld/workflow v0.0.0
 
 require (
-	github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240120085724-a66c24cd32b1
-	github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240124150923-2a923229672a
+	github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240124230554-8949221e29cc
+	github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240124230554-8949221e29cc
 )
 
 require (

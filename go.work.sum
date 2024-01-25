@@ -5,12 +5,16 @@ github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240119182156-16f07aa
 github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240119182156-16f07aa500d9/go.mod h1:zV7A7jdUp7+9i/ypOd3IPstNrXtf+KKZbcCYVF6PggU=
 github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240120085724-a66c24cd32b1 h1:xKnwKGW4aWgdz6Lr5xqDgHLP894YEBOJtIvezrAE4/4=
 github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240120085724-a66c24cd32b1/go.mod h1:zV7A7jdUp7+9i/ypOd3IPstNrXtf+KKZbcCYVF6PggU=
+github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240124230554-8949221e29cc h1:fbAXJBr92klwLSjKQEbQq5LDhLWHlMZTA7Tp8IwhlBQ=
+github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240124230554-8949221e29cc/go.mod h1:zV7A7jdUp7+9i/ypOd3IPstNrXtf+KKZbcCYVF6PggU=
 github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240119182156-16f07aa500d9 h1:c3zvCGS3jL06AyXa+hFdRKo7QNJhlJlk/UsqeByWSiE=
 github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240119182156-16f07aa500d9/go.mod h1:/ZHGRIPdMbnUE+qAGSmrXBvuI/jxM2kfqfvE39sGxKM=
 github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240124141657-27c0e50f04d2 h1:F9CogNKrs9vuqSYZwewYzwbufNKqsdzcUL0WBZbc2Oo=
 github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240124141657-27c0e50f04d2/go.mod h1:Kw0IK0VDR6Qhb43pgh57tXrdymv/xy7Ngd4Qj1Mvum8=
 github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240124150923-2a923229672a h1:9g8JvBg8+zH9a707vcvc0JtvU2XpkoQXam+3nOslryg=
 github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240124150923-2a923229672a/go.mod h1:m8rwGiggsPmEZ2dqL36JF8mPR7KJ0nXqBvkKAqKz6OI=
+github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240124230554-8949221e29cc h1:YkpfsxoCrg/JH7DNskn2wJoOnZWIezfX9TIZ+js1T90=
+github.com/blueprint-uservices/blueprint/plugins v0.0.0-20240124230554-8949221e29cc/go.mod h1:m8rwGiggsPmEZ2dqL36JF8mPR7KJ0nXqBvkKAqKz6OI=
 github.com/blueprint-uservices/blueprint/runtime v0.0.0-20240120085724-a66c24cd32b1 h1:SUNySg7ltVOAQGCenZ7Ahs34J80m1oXXl6fZQrST0RY=
 github.com/blueprint-uservices/blueprint/runtime v0.0.0-20240120085724-a66c24cd32b1/go.mod h1:KZO9VA/GtihdKATc419+NZbdNP/rOhInglginrou2v0=
 github.com/bradfitz/gomemcache v0.0.0-20230905024940-24af94b03874 h1:N7oVaKyGp8bttX0bfZGmcGkjz7DLQXhAn3DNd3T0ous=
