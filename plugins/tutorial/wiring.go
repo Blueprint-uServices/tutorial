@@ -44,7 +44,7 @@ func AddHelloParam(spec wiring.WiringSpec, serviceName string) {
 	// Get the pointer for the serviceName to ensure that the newly defined wrapper IR node will be attached to the node chain of the desired service
 	ptr := pointer.GetPointer(spec, serviceName)
 	if ptr == nil {
-		slog.Error("Unable to add hello method to " + serviceName + " as it is not a pointer. Did you forget to define " + serviceName + "? You can define serviceName using `workflow.Service`")
+		slog.Error("Unable to add hello param to " + serviceName + " as it is not a pointer. Did you forget to define " + serviceName + "? You can define serviceName using `workflow.Service`")
 		return
 	}
 
@@ -71,7 +71,7 @@ func AddHelloParam(spec wiring.WiringSpec, serviceName string) {
 		// Get the IRNode that will be wrapped by HelloWrapper
 		var client golang.Service
 		if err := ns.Get(clientNext, &client); err != nil {
-			return nil, blueprint.Errorf("Tutorial Plugin %s expected %s to be a golang.Service, but encountered %s", wrapper_name, serverNext, err)
+			return nil, blueprint.Errorf("Tutorial Plugin %s expected %s to be a golang.Service, but encountered %s", wrapper_name, clientNext, err)
 		}
 
 		return newHelloParamClientWrapper(client_wrapper_name, client)
@@ -80,13 +80,13 @@ func AddHelloParam(spec wiring.WiringSpec, serviceName string) {
 
 func Instrument(spec wiring.WiringSpec, serviceName string) {
 	// Define the names for the wrapper nodes we are adding to the Blueprint IR
-	wrapper_name := serviceName + ".hello.param.server"
-	client_wrapper_name := serviceName + ".hello.param.client"
+	wrapper_name := serviceName + ".hello.instrument.server"
+	client_wrapper_name := serviceName + ".hello.instrument.client"
 
 	// Get the pointer for the serviceName to ensure that the newly defined wrapper IR node will be attached to the node chain of the desired service
 	ptr := pointer.GetPointer(spec, serviceName)
 	if ptr == nil {
-		slog.Error("Unable to add hello method to " + serviceName + " as it is not a pointer. Did you forget to define " + serviceName + "? You can define serviceName using `workflow.Service`")
+		slog.Error("Unable to add instrument " + serviceName + " as it is not a pointer. Did you forget to define " + serviceName + "? You can define serviceName using `workflow.Service`")
 		return
 	}
 
@@ -113,7 +113,7 @@ func Instrument(spec wiring.WiringSpec, serviceName string) {
 		// Get the IRNode that will be wrapped by HelloWrapper
 		var client golang.Service
 		if err := ns.Get(clientNext, &client); err != nil {
-			return nil, blueprint.Errorf("Tutorial Plugin %s expected %s to be a golang.Service, but encountered %s", wrapper_name, serverNext, err)
+			return nil, blueprint.Errorf("Tutorial Plugin %s expected %s to be a golang.Service, but encountered %s", wrapper_name, clientNext, err)
 		}
 
 		return newHelloInstrumentClientWrapper(client_wrapper_name, client)

@@ -12,11 +12,15 @@ import (
 	"github.com/blueprint-uservices/blueprint/plugins/workflow"
 	"github.com/blueprint-uservices/tutorial/examples/helloworld/workflow/servicea"
 	"github.com/blueprint-uservices/tutorial/examples/helloworld/workflow/serviceb"
+	"github.com/blueprint-uservices/tutorial/plugins/tutorial"
 )
 
+// Deploys the two services in separate containers, connecting them with HTTP.
+// Uses an in-memory cache as the cache backend.
+// Applies the various tutorial modifiers to showcase usage of the tutorial plugins.
 var Docker = cmdbuilder.SpecOption{
 	Name:        "docker",
-	Description: "Deploys each service in a separate container with gRPC, uses an in-memorycache as the cache backend.",
+	Description: "Deploys each service in a separate container with http, uses an in-memorycache as the cache backend.",
 	Build:       makeDockerSpec,
 }
 
@@ -26,6 +30,9 @@ func makeDockerSpec(spec wiring.WiringSpec) ([]string, error) {
 
 		procName := strings.ReplaceAll(service_name, "service", "process")
 		cntrName := strings.ReplaceAll(service_name, "service", "container")
+		tutorial.Instrument(spec, service_name)
+		tutorial.AddHelloMethod(spec, service_name)
+		tutorial.AddHelloParam(spec, service_name)
 		http.Deploy(spec, service_name)
 		goproc.CreateProcess(spec, procName, service_name)
 		return linuxcontainer.CreateContainer(spec, cntrName, procName)

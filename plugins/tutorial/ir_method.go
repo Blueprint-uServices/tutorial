@@ -61,7 +61,7 @@ func newHelloMethodWrapper(name string, server ir.IRNode) (*HelloMethodWrapper, 
 	node := &HelloMethodWrapper{}
 	node.InstanceName = name
 	node.Wrapped = serverNode
-	node.outputPackage = "tutorial"
+	node.outputPackage = "tutorial_method"
 
 	return node, nil
 }
@@ -77,7 +77,7 @@ func (node *HelloMethodWrapper) genInterface(ctx ir.BuildContext) (*gocode.Servi
 	}
 	i := gocode.CopyServiceInterface(fmt.Sprintf("%v_TutorialMethod", iface.BaseName), module_ctx.Info().Name+"/"+node.outputPackage, iface)
 	health_check_method := &gocode.Func{}
-	health_check_method.Name = "Hello"
+	health_check_method.Name = "HelloNew"
 	health_check_method.Returns = append(health_check_method.Returns, gocode.Variable{Type: &gocode.BasicType{Name: "string"}})
 	i.AddMethod(*health_check_method)
 	return i, nil
@@ -154,12 +154,13 @@ func generateServerHandler(builder golang.ModuleBuilder, iface *gocode.ServiceIn
 }
 
 type serverArgs struct {
-	Package   golang.PackageInfo
-	Service   *gocode.ServiceInterface
-	Iface     *gocode.ServiceInterface
-	Name      string
-	IfaceName string
-	Imports   *gogen.Imports
+	Package         golang.PackageInfo
+	Service         *gocode.ServiceInterface
+	Iface           *gocode.ServiceInterface
+	Name            string
+	IfaceName       string
+	Imports         *gogen.Imports
+	ServerIfaceName string
 }
 
 func generateClientSideInterfaces(builder golang.ModuleBuilder, iface *gocode.ServiceInterface, outputPackage string) error {
@@ -210,7 +211,7 @@ func (handler *{{$receiver}}) {{$f.Name -}} ({{ArgVarsAndTypes $f "ctx context.C
 	return handler.Service.{{$f.Name}}({{ArgVars $f "ctx"}})
 }
 {{end}}
-func (handler *{{$receiver}}) Hello(ctx context.Context) (string, error) {
+func (handler *{{$receiver}}) HelloNew(ctx context.Context) (string, error) {
 	return "Hello!", nil
 }
 `

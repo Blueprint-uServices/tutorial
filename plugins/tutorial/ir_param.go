@@ -61,7 +61,7 @@ func newHelloParamServerWrapper(name string, server ir.IRNode) (*HelloParamServe
 	node := &HelloParamServerWrapper{}
 	node.InstanceName = name
 	node.Wrapped = serverNode
-	node.outputPackage = "tutorial"
+	node.outputPackage = "tutorial_param"
 
 	return node, nil
 }
@@ -95,7 +95,7 @@ func (node *HelloParamServerWrapper) GenerateFuncs(builder golang.ModuleBuilder)
 	if err != nil {
 		return err
 	}
-	iface, err := golang.GetGoInterface(builder, node)
+	iface, err := node.genInterface(builder)
 	if err != nil {
 		return err
 	}
@@ -178,12 +178,6 @@ package {{.Package.ShortName}}
 
 {{.Imports}}
 
-type {{.IfaceName}} interface {
-	{{range $_, $f := .Iface.Methods -}}
-	{{Signature $f}}
-	{{end}}
-}
-
 type {{.Name}} struct {
 	Service {{.Imports.NameOf .Service.UserType}}
 }
@@ -198,7 +192,7 @@ func New_{{.Name}}(ctx context.Context, service {{.Imports.NameOf .Service.UserT
 {{$receiver := .Name -}}
 {{ range $_, $f := .Service.Methods}}
 func (handler *{{$receiver}}) {{$f.Name -}} ({{ArgVarsAndTypes $f "ctx context.Context"}}, extraparam string) ({{RetVarsAndTypes $f "retparam string" "err error"}}) {
-	{{RetVars $f "err"}} = handler.Service.{{$f.Name}}(ArgVars $f "ctx")
+	{{RetVars $f "err"}} = handler.Service.{{$f.Name}}({{ArgVars $f "ctx"}})
 	retparam = extraparam
 	return
 }
@@ -227,19 +221,11 @@ func (node *HelloParamClientWrapper) Name() string {
 
 // Implements ir.IRNode
 func (node *HelloParamClientWrapper) String() string {
-	return node.Name() + " = HelloParamServerWrapper(" + node.Wrapped.Name() + ")"
+	return node.Name() + " = HelloParamClientWrapper(" + node.Wrapped.Name() + ")"
 }
 
 // Implements golang.ProvidesInterface
 func (node *HelloParamClientWrapper) AddInterfaces(builder golang.ModuleBuilder) error {
-	iface, err := node.genInterface(builder)
-	if err != nil {
-		return err
-	}
-	err = generateClientSideParamInterfaces(builder, iface, node.outputPackage)
-	if err != nil {
-		return err
-	}
 	return node.Wrapped.AddInterfaces(builder)
 }
 
@@ -261,16 +247,16 @@ func (node *HelloParamClientWrapper) genInterface(ctx ir.BuildContext) (*gocode.
 	return i, nil
 }
 
-func newHelloParamClientWrapper(name string, server ir.IRNode) (*HelloParamServerWrapper, error) {
+func newHelloParamClientWrapper(name string, server ir.IRNode) (*HelloParamClientWrapper, error) {
 	serverNode, ok := server.(golang.Service)
 	if !ok {
 		return nil, blueprint.Errorf("tutorial server wrapper requires %s to be a golang service but got %s", server.Name(), reflect.TypeOf(server).String())
 	}
 
-	node := &HelloParamServerWrapper{}
+	node := &HelloParamClientWrapper{}
 	node.InstanceName = name
 	node.Wrapped = serverNode
-	node.outputPackage = "tutorial"
+	node.outputPackage = "tutorial_param"
 
 	return node, nil
 }
@@ -290,7 +276,7 @@ func (node *HelloParamClientWrapper) GenerateFuncs(builder golang.ModuleBuilder)
 	if err != nil {
 		return err
 	}
-	err = generateServerParamHandler(builder, iface, service, node.outputPackage)
+	err = generateClientParamHandler(builder, iface, service, node.outputPackage)
 	if err != nil {
 		return err
 	}
@@ -329,12 +315,13 @@ func generateClientParamHandler(builder golang.ModuleBuilder, iface *gocode.Serv
 	}
 
 	server := &serverArgs{
-		Package:   pkg,
-		Service:   wrapped_service,
-		Iface:     iface,
-		Name:      wrapped_service.BaseName + "_TutorialParamClientWrapper",
-		IfaceName: iface.Name,
-		Imports:   gogen.NewImports(pkg.Name),
+		Package:         pkg,
+		Service:         wrapped_service,
+		Iface:           iface,
+		Name:            wrapped_service.BaseName + "_TutorialParamClientWrapper",
+		IfaceName:       iface.Name,
+		ServerIfaceName: wrapped_service.Name,
+		Imports:         gogen.NewImports(pkg.Name),
 	}
 
 	server.Imports.AddPackages("context", "log")
@@ -356,10 +343,10 @@ type {{.IfaceName}} interface {
 }
 
 type {{.Name}} struct {
-	Client {{.Imports.NameOf .Service.UserType}}
+	Client {{.ServerIfaceName}}
 }
 
-func New_{{.Name}}(ctx context.Context, client {{.Imports.NameOf .Service.UserType}}) (*{{.Name}}, error) {
+func New_{{.Name}}(ctx context.Context, client {{.ServerIfaceName}}) (*{{.Name}}, error) {
 	handler := &{{.Name}}{}
 	handler.Client = client
 	return handler, nil
@@ -367,10 +354,10 @@ func New_{{.Name}}(ctx context.Context, client {{.Imports.NameOf .Service.UserTy
 
 {{$service := .Service.Name -}}
 {{$receiver := .Name -}}
-{{ range $_, $f := .Service.Methods }}
+{{ range $_, $f := .Iface.Methods }}
 func (handler *{{$receiver}}) {{$f.Name -}} ({{ArgVarsAndTypes $f "ctx context.Context"}}) ({{RetVarsAndTypes $f "err error"}}) {
 	var retparam string
-	{{RetVars $f "retparam" "err"}} handler.Service.{{$f.Name}}({{ArgVars $f "ctx"}}, "Hello!")
+	{{RetVars $f "retparam" "err"}} = handler.Client.{{$f.Name}}({{ArgVars $f "ctx"}}, "Extra!")
 	log.Println("Ret param was ", retparam)
 	return
 }

@@ -3,6 +3,7 @@ module github.com/blueprint-uservices/tutorial/examples/helloworld/wiring
 go 1.20
 
 require github.com/blueprint-uservices/tutorial/examples/helloworld/workflow v0.0.0
+require github.com/blueprint-uservices/tutorial/plugins v0.0.0
 
 require (
 	github.com/blueprint-uservices/blueprint/blueprint v0.0.0-20240124230554-8949221e29cc
@@ -31,3 +32,4 @@ require (
 )
 
 replace github.com/blueprint-uservices/tutorial/examples/helloworld/workflow => ../workflow
+replace github.com/blueprint-uservices/tutorial/plugins => ../../../plugins
