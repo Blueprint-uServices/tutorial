@@ -1,3 +1,4 @@
+// Package servicea implements a simple Service called ServiceA that calls ServiceB
 package servicea
 
 import (
@@ -6,6 +7,7 @@ import (
 	"github.com/blueprint-uservices/tutorial/examples/helloworld/workflow/serviceb"
 )
 
+// ServiceA provides the world-facing interface for service A
 type ServiceA interface {
 	Hello(ctx context.Context, arg string) (string, error)
 }

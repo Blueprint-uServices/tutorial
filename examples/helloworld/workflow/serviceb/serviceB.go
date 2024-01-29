@@ -1,3 +1,4 @@
+// Package servicea implements a simple Service called that calls ServiceB
 package serviceb
 
 import (
@@ -6,6 +7,7 @@ import (
 	"github.com/blueprint-uservices/blueprint/runtime/core/backend"
 )
 
+// ServiceB provides the world-facing interface for service B
 type ServiceB interface {
 	Join(ctx context.Context, a1 string, a2 string) (string, error)
 }

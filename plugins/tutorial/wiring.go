@@ -1,3 +1,7 @@
+// Package tutorial implements the following wiring functions:
+//  1. AddHelloMethod: Adds a new method called `HelloNew` to the service interface.
+//  2. AddHelloParam: Adds an extra call parameter and an extra return parameter to every method in the service.
+//  3. Instrument: Adds logging statements to both the server and client side of every service.
 package tutorial
 
 import (
@@ -9,6 +13,7 @@ import (
 	"golang.org/x/exp/slog"
 )
 
+// [AddHelloMethod] can be called from the wiring specification to add a `HelloNew` method to Service with name `serviceName`.
 func AddHelloMethod(spec wiring.WiringSpec, serviceName string) {
 	// Define the name for the wrapper node we are adding to the Blueprint IR
 	wrapper_name := serviceName + ".hello.method"
@@ -36,6 +41,7 @@ func AddHelloMethod(spec wiring.WiringSpec, serviceName string) {
 	})
 }
 
+// [AddHelloParam] can be called from the wiring specification to add an extra call parameter and an extra return parameter to every method exposed by the Service with name `serviceName`.
 func AddHelloParam(spec wiring.WiringSpec, serviceName string) {
 	// Define the names for the wrapper nodes we are adding to the Blueprint IR
 	wrapper_name := serviceName + ".hello.param.server"
@@ -78,6 +84,7 @@ func AddHelloParam(spec wiring.WiringSpec, serviceName string) {
 	})
 }
 
+// [Instrument] can be called from the wiring specification to add logging statements to every method in both the server and client side code of Service with `serviceName`.
 func Instrument(spec wiring.WiringSpec, serviceName string) {
 	// Define the names for the wrapper nodes we are adding to the Blueprint IR
 	wrapper_name := serviceName + ".hello.instrument.server"
